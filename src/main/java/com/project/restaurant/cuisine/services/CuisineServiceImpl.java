@@ -110,27 +110,27 @@ public class CuisineServiceImpl implements CuisineService {
         return savedCuisine;
     }
 
-    @Override
-    public Page<CreateCuisineDTO> getAllCuisines(PageDTO pageDTO) {
-        Page<Cuisine> cuisinePage = cuisineRepository.findAll(PageRequest.of(pageDTO.getPageNumber(), pageDTO.getPageSize()));
-        List<CreateCuisineDTO> list = new ArrayList<>();
-
-        List<Cuisine> cuisineList = cuisinePage.getContent();
-        for (Cuisine item : cuisineList){
-            List<CuisineImage> cuisineImageList = cuisineImageRepository.findAllByCuisineId(item.getId());
-
-
-            CreateCuisineDTO cuisineDTO = cuisineMapper.toCuisineDTO(item);
-
-            cuisineDTO.setImageList(cuisineImageList);
-
-
-            list.add(cuisineDTO);
-        }
-
-        Page<CreateCuisineDTO> page = new PageImpl<>(list, PageRequest.of(pageDTO.getPageNumber(), pageDTO.getPageSize()),
-                list.size());
-
-        return page;
-    }
+//    @Override
+//    public Page<CreateCuisineDTO> getAllCuisines(PageDTO pageDTO) {
+//        Page<Cuisine> cuisinePage = cuisineRepository.findAll(PageRequest.of(pageDTO.getPageNumber(), pageDTO.getPageSize()));
+//        List<CreateCuisineDTO> list = new ArrayList<>();
+//
+//        List<Cuisine> cuisineList = cuisinePage.getContent();
+//        for (Cuisine item : cuisineList){
+//            List<CuisineImage> cuisineImageList = cuisineImageRepository.findAllByCuisineId(item.getId());
+//
+//
+//            CreateCuisineDTO cuisineDTO = cuisineMapper.toCuisineDTO(item);
+//
+//            cuisineDTO.setImageList(cuisineImageList);
+//
+//
+//            list.add(cuisineDTO);
+//        }
+//
+//        Page<CreateCuisineDTO> page = new PageImpl<>(list, PageRequest.of(pageDTO.getPageNumber(), pageDTO.getPageSize()),
+//                list.size());
+//
+//        return page;
+//    }
 }
