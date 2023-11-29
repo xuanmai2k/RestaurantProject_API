@@ -1,0 +1,57 @@
+spring:
+  profiles:
+    active: dev #DEV or PRO environment
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+      show-sql: true
+
+##====== ADD 2023/11/22 xuanmai START ======#
+#Request mapping
+user:
+  user: /users
+  create: /createUser
+  login: /login
+  search: /search
+  change-password: /change-password
+
+address:
+  address: /addresses
+  add: /add/
+  user: /user/
+
+product: /products
+CUISINE: /cuisines
+CATEGORY: /categories
+INGREDIENT: /ingredients
+PROMOTION: /promotions
+EVENT: /events
+STATUS: /status
+TECHNIQUE: /techniques
+RESERVATION: /reservations
+LOG_PATH: restaurant/src/main/upload/images/product_images/
+ALLOWED_CHARACTERS: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ
+LENGTH_OF_DISCOUNT_CODE_PROMOTION: 8
+LENGTH_OF_PRODUCT_CODE: 6
+ACTIVATE: activated
+NOT_ACTIVATE: not-activated
+PENDING: pending
+##====== ADD 2023/11/22 xuanmai END ======#
+
+# JWT RSA key pair
+jwt:
+  private:
+    key: classpath:rsa.private.key
+  public:
+    key: classpath:rsa.public.key
+  issuer: restaurant.com.vn
+  role: roles
+  authorityPrefix: ROLE_
+  type: Bearer
+  header: Authorization
+  secret: eyJhbGciOiJIUzUxMiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY5NDczMDU3MiwiaWF0IjoxNjk0NzMwNTcyfQ.-dvh1CkowJgF7MpPH_P50HBV_yaJUCKGmjki1oZFX-eR7g4zwB_4z7a9WtLMoonoEAk258bw7Rt0WLGCMZ4CkA

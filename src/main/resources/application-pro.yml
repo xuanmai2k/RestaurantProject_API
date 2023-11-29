@@ -1,0 +1,15 @@
+server:
+  port: 8081
+
+db:
+  port: 3306
+  name: restaurant_db
+  endpoint:
+  username:
+  password:
+
+spring:
+  datasource:
+    url: jdbc:mysql://${db.endpoint}:${db.port}/${db.name}
+    username: ${db.username}
+    password: ${db.password}
