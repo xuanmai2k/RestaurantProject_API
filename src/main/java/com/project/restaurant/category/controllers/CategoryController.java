@@ -114,8 +114,9 @@ public class CategoryController {
 
             // Found
             if (category != null) {
+                CategoryDTO categoryDTO = categoryMapper.toCategoryDTO(category);
                 // Successfully
-                return new ResponseEntity<>(category, HttpStatus.OK);
+                return new ResponseEntity<>(categoryDTO, HttpStatus.OK);
             }
 
             // Not found

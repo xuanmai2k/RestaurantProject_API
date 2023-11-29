@@ -34,7 +34,7 @@ public class CuisineController {
     /**
      * REST API methods for Retrieval operations
      *
-     * @param pageDTO   This is a page
+     * @param pageDTO This is a page
      * @return list all of cuisines
      */
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
@@ -60,14 +60,77 @@ public class CuisineController {
         }
     }
 
+    /**
+     * Build get cuisine by id REST API
+     *
+     * @param id This is cuisine id
+     * @return a cuisine
+     */
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
+    @GetMapping("{id}")
+    public ResponseEntity<?> getCuisineById(@PathVariable Long id) {
+        try {
+            CreateCuisineDTO cuisine = cuisineService.getCuisineById(id);
+
+            // Found
+            if (cuisine != null) {
+                // Successfully
+                return new ResponseEntity<>(cuisine, HttpStatus.OK);
+            }
+
+            // Not found
+            body.setResponse(Response.Key.STATUS, Response.Value.NOT_FOUND);
+            return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            logger.info(ex.getMessage());
+
+            // Failed
+            body.setResponse(Response.Key.STATUS, Response.Value.FAILURE);
+            return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping
-    public ResponseEntity<?> createCuisine(@RequestBody CreateCuisineDTO createCuisineDTO){
+    public ResponseEntity<?> createCuisine(@RequestBody CreateCuisineDTO createCuisineDTO) {
         try {
             Cuisine saved = cuisineService.createCuisine(createCuisineDTO);
 
             //Successfully
             return new ResponseEntity<>(saved, HttpStatus.CREATED);
+        } catch (Exception ex) {
+            logger.info(ex.getMessage());
+
+            //Failed
+            body.setResponse(Response.Key.STATUS, Response.Value.FAILURE);
+            return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Build update cuisine REST API
+     *
+     * @param id               This is cuisine id
+     * @param createCuisineDTO This cuisine details
+     * @return cuisine is updated
+     */
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PutMapping("{id}")
+    public ResponseEntity<?> updateCuisine(@PathVariable Long id, @RequestBody CreateCuisineDTO createCuisineDTO) {
+        try {
+            CreateCuisineDTO cuisine = cuisineService.getCuisineById(id);
+
+            //Found
+            if(cuisine != null){
+                Cuisine updatedCuisine = cuisineService.updateCuisine(id, createCuisineDTO);
+
+                //Successfully
+                return new ResponseEntity<>(updatedCuisine, HttpStatus.OK);
+            }
+
+            // Not found
+            body.setResponse(Response.Key.STATUS, Response.Value.NOT_FOUND);
+            return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
             logger.info(ex.getMessage());
 

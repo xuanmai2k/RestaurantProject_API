@@ -3,6 +3,8 @@ package com.project.restaurant.cuisine.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Data
 @Entity
 @Getter
@@ -10,7 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "cuisine_image")
-public class CuisineImage {
+public class CuisineImage{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
